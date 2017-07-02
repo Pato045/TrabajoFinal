@@ -1,0 +1,23 @@
+{
+  "name": "trabajofinal",
+  "version": "1.0.0",
+  "description": "Trabajo final de licenciatura en sistema",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pato045/TrabajoFinal.git"
+  },
+  "author": "Angel, Patricio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pato045/TrabajoFinal/issues"
+  },
+  "homepage": "https://github.com/Pato045/TrabajoFinal#readme",
+  "dependencies":{
+    "express":"*",
+    "jimp": "*"
+  }
+}
