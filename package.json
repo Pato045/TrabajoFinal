@@ -16,8 +16,8 @@
     "url": "https://github.com/Pato045/TrabajoFinal/issues"
   },
   "homepage": "https://github.com/Pato045/TrabajoFinal#readme",
-  "dependencies":{
-    "express":"*",
-    "jimp": "*"
+  "dependencies": {
+    "express": "^4.15.3",
+    "jimp": "^0.2.28"
   }
 }
