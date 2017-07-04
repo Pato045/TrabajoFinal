@@ -1,0 +1,1 @@
+Instrucciones: poner en esta carpeta la imagen a procesar con el nombre image.jpg 
