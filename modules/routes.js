@@ -37,11 +37,11 @@ app.post("/processImage" , upload.single('newimage'),  function(req, res, next){
 
 		var folderName = req.body.name; 
 		
-		patricio.procesarImagen({image: req.file.filename, folderName: folderName , success: function(where){
+		patricio.procesarImagen({image: req.file.filename, folderName: folderName , success: function(where,level){
 
 
 			setTimeout(function(){ //para que pueda terminar de crear las imagenes
-				res.redirect('map/'+where);	
+				res.redirect('map/'+where+level);	
 			},2000);
 			
 		} });

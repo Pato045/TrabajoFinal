@@ -22,8 +22,8 @@ var micodigo = {
 		    let height=0;
 		    let size=256;
 		    let array = [];
-		    let i = 0;
-
+			let i = 0;
+			let level=0;
 		    var folderName = options.folderName;
 
 
@@ -34,7 +34,8 @@ var micodigo = {
 				//console.log(width);
 				//console.log(height);
 		            while (size < width || size < height){
-		            size = size * 2;
+					size = size * 2;
+					level++;
 					//console.log(size);
 		        }
 		        this.contain(size, size, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
@@ -45,7 +46,7 @@ var micodigo = {
 
 
 			    if(typeof options.success != "undefined"){
-			    	options.success(folderName);
+			    	options.success(folderName,level);
 			    }
 
 		    });

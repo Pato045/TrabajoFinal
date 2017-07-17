@@ -1,22 +1,82 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Test</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css.map">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">UNLaR</h1>
+        <h2 class="subtitle">Microscopio Virtual</h2>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2 class="title">Sube una imagen</h2>
+      <h3 class="subtitle">
+        A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+      </h3>
+      <div class="box">
+        <form method="post" action="/processImage"  enctype="multipart/form-data">
+          <label class="label">Seleccione una Imagen:</label>
+          <div class="field has-addons">
+            <p class="control"><label class="button is-primary"><span class="icon is-small"><i class="fa fa-file-image-o" aria-hidden="true"></i></span><span>Seleccionar</span><input class="input is-primary" type="file" name ="newimage" style="display: none;"></label></p>
+            <p class="control is-expanded"><input class="input" type="text" placeholder="Ningun archivo seleccionado" disabled></p>
+          </div>
+          <div class="field">
+            <label class="label">Nombre de Carpeta:</label>
+            <p class="control has-icons-left">
+              <input class="input is-primary" type="text" name ="name" placeholder="Escriba un nombre para la carpeta de la imagen">
+              <span class="icon is-small is-left"><i class="fa fa-folder-o"></i></span>
+            </p>
+          </div>
+          <button class="button is-success"><span class="icon is-small"><i class="fa fa-upload"></i></span><span>Subir</span></button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>The source code is licensed<a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+        <p><a class="icon" href="https://github.com/Pato045/TrabajoFinal"><i class="fa fa-github"></i></a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
 
-<h2> Sube una imagen</h2>
+    // We can attach the `fileselect` event to all file inputs on the page
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+          numFiles = input.get(0).files ? input.get(0).files.length : 1,
+          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
 
-<form method="post" action="/processImage"  enctype="multipart/form-data">
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+        $(':file').on('fileselect', function(event, numFiles, label) {
 
-		<input type="file" name ="newimage">
-		<input type="text" name ="name" placeholder="Nombre de carpeta">
-		<button>Subir</button>
-</form>
+            var input = $(this).parents('.has-addons').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
 
+            if( input.length ) {
+                input.val(log);
+            } else {
+                if( log ) alert(log);
+            }
 
+        });
+    });
+    
+  });
+  </script>
 </body>
 </html>

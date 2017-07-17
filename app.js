@@ -35,10 +35,12 @@ app.get("/",function(req, res){
 app.get("/map/:where", function(req, res){
 
 
-    var where = req.params.where; 
+    var parametro = req.params.where; 
+    var where=parametro.substr(0,parametro.length-1);
+    var level=parametro.substr(parametro.length-1,1);
 
 
-    res.render('layouts/map',{where: where});   
+    res.render('layouts/map',{where: where, level: level});   
 })
 
 
