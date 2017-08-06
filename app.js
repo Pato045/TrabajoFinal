@@ -35,12 +35,24 @@ app.get("/",function(req, res){
 app.get("/map/:where", function(req, res){
 
 
-    var parametro = req.params.where; 
-    var where=parametro.substr(0,parametro.length-1);
-    var level=parametro.substr(parametro.length-1,1);
+    var where = req.params.where; 
+    //var where=parametro.substr(0,parametro.length-1);
+    //var level=parametro.substr(parametro.length-1,1);
 
+    //console.log("level",level);
 
-    res.render('layouts/map',{where: where, level: level});   
+    var fs = require("fs");
+
+	fs.readFile('img/'+where+'/level.txt', function read(err, data) {
+		if (err) {
+		    throw err;
+		}
+		level = data;    
+		res.render('layouts/map',{where: where, level: level});   	
+
+	});
+
+    
 })
 
 

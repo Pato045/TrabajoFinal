@@ -22,7 +22,7 @@
         A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
       </h3>
       <div class="box">
-        <form method="post" action="/processImage"  enctype="multipart/form-data">
+        <form id="the-form"  enctype="multipart/form-data" method="post" action="/processImage" > <!---->
           <label class="label">Seleccione una Imagen:</label>
           <div class="field has-addons">
             <p class="control"><label class="button is-primary"><span class="icon is-small"><i class="fa fa-file-image-o" aria-hidden="true"></i></span><span>Seleccionar</span><input class="input is-primary" type="file" name ="newimage" style="display: none;"></label></p>
@@ -48,6 +48,12 @@
       </div>
     </div>
   </footer>
+
+  <div id="wait_window" style="position: fixed; top: 50%; left: 50%; margin-top: -200px; margin-left: -300px; height: 400px; width: 600px; display:none;">
+      <h2>Espere, estamos procesando el archivo</h2>
+  </div>
+
+
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript">
   $(function() {
@@ -64,6 +70,8 @@
     $(document).ready( function() {
         $(':file').on('fileselect', function(event, numFiles, label) {
 
+
+
             var input = $(this).parents('.has-addons').find(':text'),
                 log = numFiles > 1 ? numFiles + ' files selected' : label;
 
@@ -74,6 +82,20 @@
             }
 
         });
+
+
+        $("#the-form button").click(function(e){
+            e.preventDefault();
+
+
+            $(wait_window).show();
+            $("#the-form").submit();
+
+
+        })
+
+
+
     });
     
   });

@@ -38,57 +38,126 @@ var micodigo = {
 					level++;
 					//console.log(size);
 		        }
-		        this.contain(size, size, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
+		      this.contain(size, size, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
 		      array.push("t");
 		      this.write("img/"+folderName+"/t.jpg");
 		      element=array[i];
-		      procesarMosaicos (element);
 
 
-			    if(typeof options.success != "undefined"){
-			    	options.success(folderName,level);
-			    }
+
+		      lastNumber = 0;
+
+		      cosa = function(n){
+		      	console.log("cosa", n, "    ", lastNumber);
+
+		      	if(n == lastNumber){
+		      		console.log("ultimo");
+
+				    if(typeof options.success != "undefined"){
+				    	console.log("success");
+
+				    	var fs = require("fs");
+
+				    	fs.writeFile("img/"+folderName+"/level.txt", ""+level+"",  function(err){
+
+				    		if(err) throw err;
+
+				    		options.success(folderName,level);
+				    	})
+
+
+				    	
+				    }
+
+		      	}
+
+		      }
+
+		      procesarMosaicos(element, 1,	cosa );
+
+
 
 		    });
 
-		    function procesarMosaicos (element) {
+		    var that = this;
 
-		        //console.log (array.toString());
-		        
+		 
+
+		    function procesarMosaicos (element, number, callback){
+
+		    	lastNumber = number;
+		    		
+
 		        Jimp.read('img/'+folderName+'/'+element+'.jpg', function(err, foto){
 		            if(err) throw err;
 		                
 		            size = this.bitmap.width; 
 		            if (size>256) {
 
-		                var copia1 = foto.clone();
-		                var copia2 = foto.clone();
-		                var copia3 = foto.clone();
-		                var copia4 = foto.clone();
+		            	var copias = [];
+		                copias[0] = foto.clone();
+		                copias[1] = foto.clone();
+		                copias[2] = foto.clone();
+		                copias[3] = foto.clone();
 
 		                size = size/2;
 
-		                copia1.crop(0,0,size,size);
-		                copia2.crop(size,0,size,size);
-		                copia3.crop(0,size,size,size);
-		                copia4.crop(size,size,size,size);
+		                copias[0].crop(0,0,size,size);
+		                copias[1].crop(size,0,size,size);
+		                copias[2].crop(0,size,size,size);
+		                copias[3].crop(size,size,size,size);
 
-		                copia1.write("img/"+folderName+"/"+element+"q.jpg");
-		                array.push(element+"q");
-		                copia2.write("img/"+folderName+"/"+element+"r.jpg");
-		                array.push(element+"r");
-		                copia3.write("img/"+folderName+"/"+element+"t.jpg");
-		                array.push(element+"t");
-		                copia4.write("img/"+folderName+"/"+element+"s.jpg");
-		                array.push(element+"s");
 
-		                i++;
-		                element=array[i];
-		                procesarMosaicos (element);
+		                var letras = ['q','r','t','s'];
+
+		                	
+		                var j = 0; 
+
+		                that.escribir(copias[j], "img/"+folderName+"/"+element+letras[j]+".jpg", function(){
+
+		                	array.push(element+letras[j]);
+		                
+		            		j++;
+		            		that.escribir(copias[j], "img/"+folderName+"/"+element+letras[j]+".jpg", function(){
+		            			array.push(element+letras[j]);
+		            			j++;
+			            		that.escribir(copias[j], "img/"+folderName+"/"+element+letras[j]+".jpg", function(){
+			            			array.push(element+letras[j]);
+			            			j++;
+				            		that.escribir(copias[j], "img/"+folderName+"/"+element+letras[j]+".jpg", function(){
+				            			array.push(element+letras[j]);
+
+						                i++;
+						                element=array[i];
+						                procesarMosaicos (element, number+1, cosa);		 
+							                if(typeof callback != "undefined"){
+							                	//console.log("calling callback "+number);
+							                	callback(number);
+							                }
+
+
+				            		})	            			
+			            		})
+
+		            		})
+		                	
+
+		                })
+
+		           
+
+		           
+
+
 		            }else{
 		                procesarAzulejos(array);
+		                if(typeof callback != "undefined"){
+		                	//console.log("calling callback "+number);
+		                	callback(number);
+		                }
 		            }
-		        })        
+		        })       	
+
 		    }
 
 		    function procesarAzulejos (array) {
@@ -101,14 +170,31 @@ var micodigo = {
 		            size = this.bitmap.width; 
 		            if (size>256) {
 		                img.resize(256, 256) 
-		                    .write("img/"+folderName+"/" + element  +".jpg"); 
-		                procesarAzulejos(array);
+		                    .write("img/"+folderName+"/" + element  +".jpg", function(){
+		                		procesarAzulejos(array);    	
+		                    }); 
+		                
 		            }
 		        });
 		    }
 
+		
+
+    }, 
+
+    escribir: function(imagenJimp, path, callback){
+
+    	imagenJimp.write(path, function(){
+
+    		if(typeof callback !="undefined"){
+    			callback();
+    		}
+
+    	})
 
     }
+
+
 
 }
 

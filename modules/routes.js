@@ -36,12 +36,15 @@ var upload = multer({ storage: storage })
 app.post("/processImage" , upload.single('newimage'),  function(req, res, next){
 
 		var folderName = req.body.name; 
-		
+				
+		//res.render('layouts/wait',{});
+
+
 		patricio.procesarImagen({image: req.file.filename, folderName: folderName , success: function(where,level){
 
 
 			setTimeout(function(){ //para que pueda terminar de crear las imagenes
-				res.redirect('map/'+where+level);	
+				res.redirect('map/'+where);	
 			},2000);
 			
 		} });
