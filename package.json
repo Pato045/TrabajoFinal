@@ -1,0 +1,22 @@
+{
+  "name": "trabajofinal",
+  "version": "0.0.0",
+  "description": "Trabajo de Titulacion Final de la carrera Licenciatura en Sistemas, Universidad Nacional de la Rioja",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pato045/TrabajoFinal.git"
+  },
+  "author": "pato045, angelcuevas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pato045/TrabajoFinal/issues"
+  },
+  "dependencies": {
+    "bulma": "*"
+  },
+  "homepage": "https://github.com/Pato045/TrabajoFinal#readme"
+}
